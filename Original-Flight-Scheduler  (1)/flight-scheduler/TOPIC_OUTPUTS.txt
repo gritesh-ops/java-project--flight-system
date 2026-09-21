@@ -1,0 +1,42 @@
+Topic01Variables
+SK101 uses gate 6
+
+Topic02DataTypes
+Delhi | 180 | 4250.5 | A | Cancelled: false
+
+Topic03Operators
+Available before booking: 55
+Booking allowed: true
+Booked after one booking: 126
+
+Topic04Expressions
+Expected departure: 11:05
+Occupancy: 69.4%
+
+Topic06Conditionals
+Delayed
+Display board selected
+
+Topic07Loops
+Check gate 1
+Check gate 2
+Check gate 3
+Boarding closes in 3 minutes
+Boarding closes in 2 minutes
+Boarding closes in 1 minutes
+Perform boarding check
+Perform boarding check
+
+Topic08Methods
+Departure: 10:35
+
+Topic09Objects
+SK101 at gate 2
+SK202 at gate 5
+
+Topic10Arrays
+Index 0: SK101
+Index 1: SK202
+Index 2: SK303
+Matching index: 1
+

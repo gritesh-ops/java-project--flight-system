@@ -1,0 +1,18 @@
+VERIFICATION
+Compiled all ten Java source files with --release 8 using JDK 25.
+Ran all nine standalone topic examples successfully; see TOPIC_OUTPUTS.txt.
+Checked the complete program for:
+- Invalid menu text and out-of-range numbers
+- Displaying the initial board
+- Case-insensitive search and a missing flight
+- Duplicate flight rejection
+- Adding a flight with hour and gate validation
+- Delay crossing midnight
+- Setting and resetting a delay
+- Cancellation and repeat cancellation
+- Rejecting delay changes for cancelled flights
+- Summary counts after updates
+- Filling all ten array slots and rejecting an eleventh flight
+- Normal exit
+All automated checks passed. Runtime checks used JDK 25; Java 8 compatibility
+was checked by compilation, not by execution on a Java 8 runtime.
