@@ -1,0 +1,23 @@
+// Topic: if else and Delay Calculation
+// Source: FlightScheduler.setDelay
+// Purpose: Choose SCHEDULED for zero delay and DELAYED for a positive delay, checking the proposed update first.
+// Study excerpt; compile complete classes under src instead.
+
+    public void setDelay(String number, int totalDelayMinutes) {
+        Flight flight = requireFlight(number);
+        if (!flight.isActive()) {
+            throw new IllegalArgumentException("Cannot delay a departed or cancelled flight.");
+        }
+        if (totalDelayMinutes < 0 || totalDelayMinutes > 24 * 60 - 1 - flight.getScheduledMinutes()) {
+            throw new IllegalArgumentException("Delay must keep the expected time within this day.");
+        }
+        int expected = flight.getScheduledMinutes() + totalDelayMinutes;
+        String status;
+        if (totalDelayMinutes == 0) {
+            status = Flight.SCHEDULED;
+        } else {
+            status = Flight.DELAYED;
+        }
+        checkGate(flight.getGate(), expected, status, flight.getNumber());
+        flight.updateBoardDetails(expected, flight.getGate(), status);
+    }

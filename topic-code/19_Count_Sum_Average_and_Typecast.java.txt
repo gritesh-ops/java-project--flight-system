@@ -1,0 +1,34 @@
+// Topic: Counting Summation Nested if Average and Typecasting
+// Source: AirportApp.printSummary
+// Purpose: Show board totals and an average active-flight delay without losing fractional results.
+// Study excerpt; compile complete classes under src instead.
+
+    private static void printSummary(FlightScheduler scheduler) {
+        int active = 0;
+        int departed = 0;
+        int cancelled = 0;
+        int delayedActive = 0;
+        int totalDelay = 0;
+        for (Flight flight : scheduler.getSortedFlights()) {
+            if (flight.isActive()) {
+                active++;
+                totalDelay += flight.getDelayMinutes();
+                if (flight.getDelayMinutes() > 0) {
+                    delayedActive++;
+                }
+            } else if (Flight.DEPARTED.equals(flight.getStatus())) {
+                departed++;
+            } else {
+                cancelled++;
+            }
+        }
+        double averageDelay = 0.0;
+        if (active > 0) {
+            averageDelay = (double) totalDelay / active;
+        }
+        System.out.printf("Total: %d | Active: %d | Departed: %d | Cancelled: %d%n",
+                scheduler.size(), active, departed, cancelled);
+        System.out.printf("Active flights with delay: %d | Total active delay: %d minutes%n",
+                delayedActive, totalDelay);
+        System.out.printf("Average delay across ALL active flights: %.2f minutes%n", averageDelay);
+    }

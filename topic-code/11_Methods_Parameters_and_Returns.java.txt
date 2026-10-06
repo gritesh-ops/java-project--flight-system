@@ -1,0 +1,18 @@
+// Topic: Methods Parameters Return Values and throw
+// Source: FlightScheduler.requireFlight and Flight.validateMinutes
+// Purpose: Reuse lookup and validation rules, returning a result or reporting a precise failure.
+// Study excerpt; compile complete classes under src instead.
+
+    private Flight requireFlight(String number) {
+        Flight found = findFlight(number);
+        if (found == null) {
+            throw new IllegalArgumentException("Flight not found: " + number);
+        }
+        return found;
+    }
+
+    private static void validateMinutes(int minutes) {
+        if (minutes < 0 || minutes >= 24 * 60) {
+            throw new IllegalArgumentException("Time must be within this day, 00:00 to 23:59.");
+        }
+    }

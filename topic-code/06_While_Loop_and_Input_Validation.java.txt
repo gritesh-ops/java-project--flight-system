@@ -1,0 +1,30 @@
+// Topic: while Loops and Numeric Input Validation
+// Source: ConsoleInput.readInt and readTime
+// Purpose: Repeat input until it is a valid integer or time, rather than terminating on a typing mistake.
+// Study excerpt; compile complete classes under src instead.
+
+    public int readInt(String prompt, int minimum, int maximum) {
+        while (true) {
+            String text = readText(prompt);
+            try {
+                int value = Integer.parseInt(text);
+                if (value >= minimum && value <= maximum) {
+                    return value;
+                }
+                System.out.println("Enter a number from " + minimum + " to " + maximum + ".");
+            } catch (NumberFormatException exception) {
+                System.out.println("Enter a whole number.");
+            }
+        }
+    }
+
+    public int readTime(String prompt) {
+        while (true) {
+            String text = readText(prompt);
+            try {
+                return Flight.parseTime(text);
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+    }

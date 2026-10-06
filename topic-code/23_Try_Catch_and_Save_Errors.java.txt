@@ -1,0 +1,16 @@
+// Topic: try catch and Checked Exception Handling
+// Source: AirportApp.save
+// Purpose: Report storage failure and let the operator retry without discarding in-memory changes.
+// Study excerpt; compile complete classes under src instead.
+
+    private static boolean save(Path file, FlightScheduler scheduler) {
+        try {
+            FlightFileStore.save(file, scheduler);
+            System.out.println("Saved " + scheduler.size() + " flights.");
+            return true;
+        } catch (IOException exception) {
+            System.out.println("Save failed: " + exception.getMessage());
+            System.out.println("Changes are still in memory. Check file permissions and retry option 8.");
+            return false;
+        }
+    }

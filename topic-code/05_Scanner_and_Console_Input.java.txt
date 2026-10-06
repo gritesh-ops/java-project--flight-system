@@ -1,0 +1,21 @@
+// Topic: Scanner and Console Input
+// Source: ConsoleInput field constructor and readText
+// Purpose: Read operator-entered flight details and menu values from the console.
+// Study excerpt; compile complete classes under src instead.
+
+import java.util.Scanner;
+import java.util.NoSuchElementException;
+
+    private final Scanner scanner;
+
+    public ConsoleInput(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public String readText(String prompt) {
+        System.out.print(prompt);
+        if (!scanner.hasNextLine()) {
+            throw new NoSuchElementException("End of console input.");
+        }
+        return scanner.nextLine().trim();
+    }

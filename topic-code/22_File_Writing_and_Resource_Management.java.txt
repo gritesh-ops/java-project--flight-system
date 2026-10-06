@@ -1,0 +1,33 @@
+// Topic: File Writing join Resources and finally
+// Source: FlightFileStore.save
+// Purpose: Write a complete snapshot, close the writer, then replace the destination; clean up a leftover temporary file.
+// Study excerpt; compile complete classes under src instead.
+
+    public static void save(Path file, FlightScheduler scheduler) throws IOException {
+        Path target = file.toAbsolutePath();
+        Files.createDirectories(target.getParent());
+        Path temporary = Files.createTempFile(target.getParent(), "flight-board-", ".tmp");
+        try {
+            try (BufferedWriter writer = Files.newBufferedWriter(temporary, StandardCharsets.UTF_8)) {
+                writer.write(HEADER);
+                writer.newLine();
+                for (Flight flight : scheduler.getSortedFlights()) {
+                    String record = String.join("|", flight.getNumber(), flight.getAirline(),
+                            flight.getOrigin(), flight.getDestination(),
+                            Flight.formatTime(flight.getScheduledMinutes()),
+                            Flight.formatTime(flight.getExpectedMinutes()), flight.getGate(), flight.getStatus());
+                    writer.write(record);
+                    writer.newLine();
+                }
+            }
+            try {
+                Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING,
+                        StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException exception) {
+                // Some file systems do not support atomic replacement.
+                Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } finally {
+            Files.deleteIfExists(temporary);
+        }
+    }

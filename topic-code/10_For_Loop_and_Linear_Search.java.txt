@@ -1,0 +1,17 @@
+// Topic: for Loop Linear Search equals and null
+// Source: FlightScheduler.findFlight
+// Purpose: Find an existing flight by number and detect duplicate numbers with one simple scan.
+// Study excerpt; compile complete classes under src instead.
+
+    public Flight findFlight(String number) {
+        if (number == null) {
+            return null;
+        }
+        String query = number.trim().toUpperCase(Locale.ROOT);
+        for (int i = 0; i < count; i++) {
+            if (flights[i].getNumber().equals(query)) {
+                return flights[i];
+            }
+        }
+        return null;
+    }

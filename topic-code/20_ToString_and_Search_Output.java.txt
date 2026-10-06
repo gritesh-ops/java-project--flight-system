@@ -1,0 +1,21 @@
+// Topic: toString String Concatenation and Search Output
+// Source: Flight.toString and AirportApp.findFlight
+// Purpose: Provide a readable complete description when a flight is found.
+// Study excerpt; compile complete classes under src instead.
+
+    @Override
+    public String toString() {
+        return number + " | " + airline + " | " + origin + " -> " + destination
+                + " | Scheduled " + formatTime(scheduledMinutes)
+                + " | Expected " + formatTime(expectedMinutes)
+                + " | Gate " + gate + " | " + status;
+    }
+
+    private static void findFlight(ConsoleInput input, FlightScheduler scheduler) {
+        Flight found = scheduler.findFlight(input.readText("Flight number: "));
+        if (found == null) {
+            System.out.println("No matching flight.");
+        } else {
+            System.out.println(found); // Calls the overridden toString method.
+        }
+    }

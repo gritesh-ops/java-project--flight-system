@@ -1,0 +1,11 @@
+// Topic: Variables Constants and Primitive Data Types
+// Source: FlightScheduler fields and AirportApp summary
+// Purpose: Store flight capacity, gate separation, array size, counts and numeric results with explicit types.
+// Study excerpt; compile complete classes under src instead.
+
+    public static final int MAX_FLIGHTS = 200;
+    public static final int GATE_GAP_MINUTES = 30;
+    private final Flight[] flights = new Flight[MAX_FLIGHTS];
+    private int count = 0;
+
+double averageDelay = 0.0;

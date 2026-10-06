@@ -1,0 +1,21 @@
+// Topic: Interfaces Comparator and Method Overriding
+// Source: FlightTimeComparator
+// Purpose: Supply a flight ordering policy to the library without adding a custom Flight inheritance hierarchy.
+// Study excerpt; compile complete classes under src instead.
+
+import java.util.Comparator;
+
+/** Topics: interfaces, overriding, Comparator and sorting. */
+public class FlightTimeComparator implements Comparator<Flight> {
+    @Override
+    public int compare(Flight first, Flight second) {
+        if (first.getExpectedMinutes() < second.getExpectedMinutes()) {
+            return -1;
+        }
+        if (first.getExpectedMinutes() > second.getExpectedMinutes()) {
+            return 1;
+        }
+        // Flight number is the tie breaker when times are equal.
+        return first.getNumber().compareTo(second.getNumber());
+    }
+}

@@ -1,0 +1,26 @@
+// Topic: Classes Objects and Fields
+// Source: Flight fields and AirportApp.addFlight
+// Purpose: Represent each flight as an object with named properties instead of unrelated variables.
+// Study excerpt; compile complete classes under src instead.
+
+    private final String number;
+    private final String airline;
+    private final String origin;
+    private final String destination;
+    private final int scheduledMinutes;
+    private int expectedMinutes;
+    private String gate;
+    private String status;
+
+    private static void addFlight(ConsoleInput input, FlightScheduler scheduler) {
+        String number = input.readText("Flight number: ");
+        String airline = input.readText("Airline: ");
+        String origin = input.readText("Origin: ");
+        String destination = input.readText("Destination: ");
+        int scheduled = input.readTime("Scheduled time (HH:mm): ");
+        String gate = input.readText("Gate: ");
+        Flight flight = new Flight(number, airline, origin, destination,
+                scheduled, scheduled, gate, Flight.SCHEDULED);
+        scheduler.addFlight(flight);
+        System.out.println("Flight added.");
+    }

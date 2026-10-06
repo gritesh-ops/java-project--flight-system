@@ -1,0 +1,24 @@
+// Topic: One Dimensional Arrays and Adding a Flight
+// Source: FlightScheduler fields and addFlight
+// Purpose: Keep a bounded board of 200 flight references and insert a validated record at the next free position.
+// Study excerpt; compile complete classes under src instead.
+
+    public static final int MAX_FLIGHTS = 200;
+    public static final int GATE_GAP_MINUTES = 30;
+    private final Flight[] flights = new Flight[MAX_FLIGHTS];
+    private int count = 0;
+
+    public void addFlight(Flight flight) {
+        if (flight == null) {
+            throw new IllegalArgumentException("Flight cannot be null.");
+        }
+        if (count == MAX_FLIGHTS) {
+            throw new IllegalArgumentException("Board is full. Maximum: " + MAX_FLIGHTS);
+        }
+        if (findFlight(flight.getNumber()) != null) {
+            throw new IllegalArgumentException("Duplicate flight number: " + flight.getNumber());
+        }
+        checkGate(flight.getGate(), flight.getExpectedMinutes(), flight.getStatus(), null);
+        flights[count] = flight;
+        count++;
+    }

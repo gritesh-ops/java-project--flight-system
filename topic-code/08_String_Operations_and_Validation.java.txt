@@ -1,0 +1,28 @@
+// Topic: String Length Indexing Trimming and Validation
+// Source: Flight.cleanText and normalizeGate
+// Purpose: Reject empty/unsafe fields and normalize gates before storing or comparing them.
+// Study excerpt; compile complete classes under src instead.
+
+    private static String cleanText(String value, String field) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException(field + " cannot be empty.");
+        }
+        String text = value.trim();
+        if (text.length() > 40 || text.contains("|") || text.contains("\n") || text.contains("\r")) {
+            throw new IllegalArgumentException(field + " must be at most 40 characters and contain no | or line breaks.");
+        }
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isISOControl(text.charAt(i))) {
+                throw new IllegalArgumentException(field + " cannot contain control characters.");
+            }
+        }
+        return text;
+    }
+
+    public static String normalizeGate(String gate) {
+        String normalized = cleanText(gate, "Gate").toUpperCase(Locale.ROOT);
+        if (!normalized.matches("[A-Z][0-9]{1,2}")) {
+            throw new IllegalArgumentException("Use a gate such as A1, B2 or C12.");
+        }
+        return normalized;
+    }

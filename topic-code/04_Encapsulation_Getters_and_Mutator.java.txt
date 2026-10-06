@@ -1,0 +1,36 @@
+// Topic: Encapsulation Accessors and Controlled Mutation
+// Source: Flight accessors and updateBoardDetails
+// Purpose: Keep fields private and update expected time, gate and status together after validation.
+// Study excerpt; compile complete classes under src instead.
+
+    public String getNumber() { return number; }
+    public String getAirline() { return airline; }
+    public String getOrigin() { return origin; }
+    public String getDestination() { return destination; }
+    public int getScheduledMinutes() { return scheduledMinutes; }
+    public int getExpectedMinutes() { return expectedMinutes; }
+    public String getGate() { return gate; }
+    public String getStatus() { return status; }
+    public int getDelayMinutes() { return expectedMinutes - scheduledMinutes; }
+    public boolean isActive() { return isActiveStatus(status); }
+
+    void updateBoardDetails(int expectedMinutes, String gate, String status) {
+        validateMinutes(expectedMinutes);
+        String checkedGate = normalizeGate(gate);
+        String checkedStatus = cleanText(status, "Status").toUpperCase(Locale.ROOT);
+        if (!isKnownStatus(checkedStatus)) {
+            throw new IllegalArgumentException("Unknown status: " + checkedStatus);
+        }
+        if (expectedMinutes < scheduledMinutes) {
+            throw new IllegalArgumentException("Expected time cannot be earlier than scheduled time.");
+        }
+        if (SCHEDULED.equals(checkedStatus) && expectedMinutes != scheduledMinutes) {
+            throw new IllegalArgumentException("A delayed flight cannot be marked SCHEDULED. Reset its delay first.");
+        }
+        if (DELAYED.equals(checkedStatus) && expectedMinutes == scheduledMinutes) {
+            throw new IllegalArgumentException("DELAYED requires a positive delay. Use the delay option first.");
+        }
+        this.expectedMinutes = expectedMinutes;
+        this.gate = checkedGate;
+        this.status = checkedStatus;
+    }

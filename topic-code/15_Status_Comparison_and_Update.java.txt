@@ -1,0 +1,28 @@
+// Topic: Status Comparison and Conditional Validation
+// Source: Flight status helpers and FlightScheduler.changeStatus
+// Purpose: Accept only known status values and recheck gate separation when a record becomes active.
+// Study excerpt; compile complete classes under src instead.
+
+    public static boolean isKnownStatus(String status) {
+        return SCHEDULED.equals(status) || DELAYED.equals(status) || BOARDING.equals(status)
+                || DEPARTED.equals(status) || CANCELLED.equals(status);
+    }
+
+    public static boolean isActiveStatus(String status) {
+        return SCHEDULED.equals(status) || DELAYED.equals(status) || BOARDING.equals(status);
+    }
+
+    public void changeStatus(String number, String status) {
+        Flight flight = requireFlight(number);
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+        String checkedStatus = status.trim().toUpperCase(Locale.ROOT);
+        if (!Flight.isKnownStatus(checkedStatus)) {
+            throw new IllegalArgumentException("Choose SCHEDULED, DELAYED, BOARDING, DEPARTED or CANCELLED.");
+        }
+        // Reinstating a cancelled/departed record is an operator correction.
+        // It must pass the same gate check as a new active flight.
+        checkGate(flight.getGate(), flight.getExpectedMinutes(), checkedStatus, flight.getNumber());
+        flight.updateBoardDetails(flight.getExpectedMinutes(), flight.getGate(), checkedStatus);
+    }

@@ -1,0 +1,20 @@
+// Topic: Enhanced for Each Loop and Formatted Printing
+// Source: AirportApp.printBoard
+// Purpose: Display every flight with aligned columns without managing a manual array index.
+// Study excerpt; compile complete classes under src instead.
+
+    private static void printBoard(FlightScheduler scheduler) {
+        System.out.println("\nDEPARTURE BOARD - ordered by expected time, then flight number");
+        System.out.printf("%-10s %-15s %-16s %-16s %-5s %-5s %-4s %-9s%n",
+                "FLIGHT", "AIRLINE", "ORIGIN", "DESTINATION", "SCHED", "EXP", "GATE", "STATUS");
+        for (Flight flight : scheduler.getSortedFlights()) {
+            System.out.printf("%-10s %-15.15s %-16.16s %-16.16s %-5s %-5s %-4s %-9s%n",
+                    flight.getNumber(), flight.getAirline(), flight.getOrigin(), flight.getDestination(),
+                    Flight.formatTime(flight.getScheduledMinutes()),
+                    Flight.formatTime(flight.getExpectedMinutes()), flight.getGate(), flight.getStatus());
+        }
+        if (scheduler.size() == 0) {
+            System.out.println("No flights scheduled.");
+        }
+        System.out.println("Long airline/city names are shortened on this board; search shows full details.");
+    }

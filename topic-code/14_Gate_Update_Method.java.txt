@@ -1,0 +1,14 @@
+// Topic: Gate Changes through Reusable Methods
+// Source: FlightScheduler.changeGate
+// Purpose: Reuse gate normalization and clash detection when the operator assigns another gate.
+// Study excerpt; compile complete classes under src instead.
+
+    public void changeGate(String number, String gate) {
+        Flight flight = requireFlight(number);
+        if (!flight.isActive()) {
+            throw new IllegalArgumentException("Cannot change the gate of a departed or cancelled flight.");
+        }
+        String checkedGate = Flight.normalizeGate(gate);
+        checkGate(checkedGate, flight.getExpectedMinutes(), flight.getStatus(), flight.getNumber());
+        flight.updateBoardDetails(flight.getExpectedMinutes(), checkedGate, flight.getStatus());
+    }

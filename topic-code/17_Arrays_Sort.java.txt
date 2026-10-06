@@ -1,0 +1,10 @@
+// Topic: Library Sorting with Arrays sort
+// Source: FlightScheduler.getSortedFlights
+// Purpose: Display flights in expected-time order while preserving the backing array element order.
+// Study excerpt; compile complete classes under src instead.
+
+    public Flight[] getSortedFlights() {
+        Flight[] board = Arrays.copyOf(flights, count);
+        Arrays.sort(board, new FlightTimeComparator());
+        return board;
+    }

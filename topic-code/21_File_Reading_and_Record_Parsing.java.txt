@@ -1,0 +1,41 @@
+// Topic: File Reading Path Files split and throws
+// Source: FlightFileStore.load
+// Purpose: Restore saved records line by line and detect malformed fields, duplicates and gate clashes.
+// Study excerpt; compile complete classes under src instead.
+
+    private static final String HEADER = "number|airline|origin|destination|scheduled|expected|gate|status";
+
+    public static FlightScheduler load(Path file) throws IOException {
+        FlightScheduler loaded = new FlightScheduler();
+        // A missing file means a new, empty board. Other I/O errors are fatal.
+        if (Files.notExists(file)) {
+            return loaded;
+        }
+        try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+            if (!HEADER.equals(reader.readLine())) {
+                throw new IOException("Invalid file header. Expected: " + HEADER);
+            }
+            String line;
+            int lineNumber = 1;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    String[] fields = line.split("\\|", -1);
+                    if (fields.length != 8) {
+                        throw new IllegalArgumentException("Expected 8 pipe-separated fields.");
+                    }
+                    Flight flight = new Flight(fields[0], fields[1], fields[2], fields[3],
+                            Flight.parseTime(fields[4]), Flight.parseTime(fields[5]), fields[6], fields[7]);
+                    loaded.addFlight(flight);
+                } catch (IllegalArgumentException exception) {
+                    // Abort safely so malformed source data is never overwritten.
+                    throw new IOException("Invalid record at line " + lineNumber + ": "
+                            + exception.getMessage(), exception);
+                }
+            }
+        }
+        return loaded;
+    }

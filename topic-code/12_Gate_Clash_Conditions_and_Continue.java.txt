@@ -1,0 +1,23 @@
+// Topic: Relational Logical Operators and continue
+// Source: FlightScheduler.checkGate
+// Purpose: Reject active flights at the same gate when their expected departure times are less than 30 minutes apart.
+// Study excerpt; compile complete classes under src instead.
+
+    private void checkGate(String gate, int expected, String status, String ignoredNumber) {
+        if (!Flight.isActiveStatus(status)) {
+            return;
+        }
+        for (int i = 0; i < count; i++) {
+            Flight other = flights[i];
+            if (!other.isActive() || other.getNumber().equals(ignoredNumber)) {
+                continue;
+            }
+            int difference = expected - other.getExpectedMinutes();
+            if (other.getGate().equals(gate)
+                    && difference > -GATE_GAP_MINUTES && difference < GATE_GAP_MINUTES) {
+                throw new IllegalArgumentException("Gate clash with " + other.getNumber()
+                        + " at " + Flight.formatTime(other.getExpectedMinutes())
+                        + ". Keep at least " + GATE_GAP_MINUTES + " minutes between active flights.");
+            }
+        }
+    }
