@@ -1,0 +1,7 @@
+number|airline|origin|destination|scheduled|expected|gate|status
+AI606|Air India|Hyderabad|Pune|08:00|08:00|A2|DEPARTED
+6E101|IndiGo|Hyderabad|Delhi|09:00|09:00|A1|SCHEDULED
+AI202|Air India|Hyderabad|Mumbai|09:45|09:45|A1|SCHEDULED
+6E303|IndiGo|Hyderabad|Chennai|10:00|10:15|B1|DELAYED
+AI404|Air India|Hyderabad|Bengaluru|10:45|10:45|B1|BOARDING
+6E505|IndiGo|Hyderabad|Kolkata|11:15|11:15|C1|CANCELLED
